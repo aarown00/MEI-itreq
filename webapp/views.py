@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import RegisterForm
+from. models import IT_Request
 
 def home(request):
+	it_requests = IT_Request.objects.all()
 	# Check to see if logging in
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -18,7 +20,11 @@ def home(request):
 			messages.error(request, "Account credentials is invalid. Please try again or register.")
 			return redirect('home')
 	else:
-		return render(request, 'home.html')
+		return render(request, 'home.html', {'it_requests': it_requests})
+
+
+
+
 
 
 def logout_user(request):
@@ -46,3 +52,11 @@ def register_user(request):
 		return render(request, 'register.html', {'form':form})
 
 	return render(request, 'register.html', {'form':form})
+
+
+def addrequest_user(request):
+    it_requests = IT_Request.objects.all()
+    messages.success(request, "Request Added!")
+    return render(request, 'home.html', {'it_requests': it_requests})
+
+
