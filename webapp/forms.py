@@ -1,7 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import IT_Request
 
+#Registration
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
     first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
@@ -40,3 +42,43 @@ class RegisterForm(UserCreationForm):
         if len(username) > 10:
             raise forms.ValidationError("ID number should contain up to 10 digits.")
         return username
+    
+#IT Request Form
+class IT_RequestForm(forms.ModelForm):
+
+    class Meta:
+        model = IT_Request
+        fields = ['department', 'eq_name', 'eq_type', 'issue', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super(IT_RequestForm, self).__init__(*args, **kwargs)
+        
+        self.fields['department'].required = True
+        self.fields['department'].widget.attrs.update({
+            'placeholder': 'Department',
+            'class': 'form-control'
+        })
+        
+        self.fields['eq_name'].required = True
+        self.fields['eq_name'].widget.attrs.update({
+            'placeholder': 'PC Name',
+            'class': 'form-control'
+        })
+        
+        self.fields['eq_type'].required = True
+        self.fields['eq_type'].widget.attrs.update({
+            'placeholder': 'Equipment Type',
+            'class': 'form-control'
+        })
+        
+        self.fields['issue'].required = True
+        self.fields['issue'].widget.attrs.update({
+            'placeholder': 'Issue',
+            'class': 'form-control'
+        })
+        
+        self.fields['description'].required = True
+        self.fields['description'].widget.attrs.update({
+            'placeholder': 'Description',
+            'class': 'form-control'
+        })

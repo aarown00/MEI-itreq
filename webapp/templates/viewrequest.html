@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* Optional: Style the card */
+    .card {
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        color: #333333;
+        border: 1px solid #dee2e6;
+    }
+
+    /* Optional: Style the card header */
+    .card-header {
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Optional: Style the card body */
+    .card-body {
+        padding: 20px;
+    }
+
+    /* Style the table header */
+    .table thead th {
+        background-color: #ffffff;
+        color: #333333;
+        white-space: nowrap;
+    }
+
+    /* Style the table cells */
+    .table tbody td {
+        background-color: #ffffff;
+        color: #333333;
+        border-bottom: 1px solid #dee2e6;
+        white-space: nowrap;
+    }
+
+    .modal-body {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4 mb-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">IT Request Dashboard</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Request Lists
+        </div>
+        <div class="card-body">
+            <table id="it-request-table" class="table">
+                <thead>
+                    <tr>
+                        <th>Requestor</th>
+                        <th>Email</th>
+                        <th>Employee ID</th>
+                        <th>Department</th>
+                        <th>Equipment Name</th>
+                        <th>Equipment Type</th>
+                        <th>Issue</th>
+                        <th>Description</th>
+                        <th>Requested At</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for it_request in it_requests %}
+                    <tr>
+                        <td>{{ it_request.user.first_name }} {{ it_request.user.last_name }}</td>
+                        <td>{{ it_request.user.email }}</td>
+                        <td>{{ it_request.user.username }}</td>
+                        <td>{{ it_request.department }}</td>
+                        <td>{{ it_request.eq_name }}</td>
+                        <td>{{ it_request.eq_type }}</td>
+                        <td>{{ it_request.issue }}</td>
+                        <td><button class="btn btn-link" onclick="showDescription('{{ it_request.description|escapejs }}')">View</button></td>
+                        <td>{{ it_request.requested_at }}</td>
+                        <td>{{ it_request.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="descriptionModalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
