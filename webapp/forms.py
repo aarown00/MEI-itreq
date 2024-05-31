@@ -61,7 +61,7 @@ class IT_RequestForm(forms.ModelForm):
         
         self.fields['eq_name'].required = True
         self.fields['eq_name'].widget.attrs.update({
-            'placeholder': 'PC Name',
+            'placeholder': 'Equipment Name',
             'class': 'form-control'
         })
         

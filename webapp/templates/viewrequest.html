@@ -43,8 +43,17 @@
         white-space: pre-wrap;
         word-wrap: break-word;
     }
-</style>
 
+    /* Remove table borders */
+    .table-bordered {
+        border: none;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: none;
+    }
+</style>
 
 <div class="container-fluid px-4">
     <h1 class="mt-4 mb-4">Dashboard</h1>
@@ -57,38 +66,40 @@
             Request Lists
         </div>
         <div class="card-body">
-            <table id="it-request-table" class="table">
-                <thead>
-                    <tr>
-                        <th>Requestor</th>
-                        <th>Email</th>
-                        <th>Employee ID</th>
-                        <th>Department</th>
-                        <th>Equipment Name</th>
-                        <th>Equipment Type</th>
-                        <th>Issue</th>
-                        <th>Description</th>
-                        <th>Requested At</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for it_request in it_requests %}
-                    <tr>
-                        <td>{{ it_request.user.first_name }} {{ it_request.user.last_name }}</td>
-                        <td>{{ it_request.user.email }}</td>
-                        <td>{{ it_request.user.username }}</td>
-                        <td>{{ it_request.department }}</td>
-                        <td>{{ it_request.eq_name }}</td>
-                        <td>{{ it_request.eq_type }}</td>
-                        <td>{{ it_request.issue }}</td>
-                        <td><button class="btn btn-link" onclick="showDescription('{{ it_request.description|escapejs }}')">View</button></td>
-                        <td>{{ it_request.requested_at }}</td>
-                        <td>{{ it_request.status }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table id="it-request-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Requestor</th>
+                            <th>Email</th>
+                            <th>Employee ID</th>
+                            <th>Department</th>
+                            <th>Equipment Name</th>
+                            <th>Equipment Type</th>
+                            <th>Issue</th>
+                            <th>Description</th>
+                            <th>Requested At</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it_request in it_requests %}
+                        <tr>
+                            <td>{{ it_request.user.first_name }} {{ it_request.user.last_name }}</td>
+                            <td>{{ it_request.user.email }}</td>
+                            <td>{{ it_request.user.username }}</td>
+                            <td>{{ it_request.department }}</td>
+                            <td>{{ it_request.eq_name }}</td>
+                            <td>{{ it_request.eq_type }}</td>
+                            <td>{{ it_request.issue }}</td>
+                            <td><button class="btn btn-link" onclick="showDescription('{{ it_request.description|escapejs }}')">View</button></td>
+                            <td>{{ it_request.requested_at }}</td>
+                            <td>{{ it_request.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -110,8 +121,4 @@
     </div>
 </div>
 
-
-
-
 {% endblock %}
-
