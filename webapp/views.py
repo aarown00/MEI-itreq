@@ -51,6 +51,15 @@ def register_user(request):
 	return render(request, 'register.html', {'form':form})
 
 
+def notices_user(request):
+    if request.user.is_authenticated:
+        it_requests = IT_Request.objects.all()
+        return render(request, 'notices.html', {'it_requests': it_requests})
+    else:
+        messages.error(request, "You must be logged in first!")
+        return redirect('login')
+
+
 def createrequest_user(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -71,10 +80,12 @@ def createrequest_user(request):
 
 
 def viewrequest_user(request):
-    # Assuming IT_Request is your model containing the data for IT requests
-    it_requests = IT_Request.objects.all()
     if request.user.is_authenticated:
+        if request.user.is_superuser:
+            it_requests = IT_Request.objects.all()
+        else:
+            it_requests = IT_Request.objects.filter(user=request.user)
         return render(request, 'viewrequest.html', {'it_requests': it_requests})
     else:
-        messages.error(request, "You Must Be Logged In First!")
+        messages.error(request, "You must be logged in first!")
         return redirect('login')

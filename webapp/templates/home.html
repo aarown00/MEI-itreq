@@ -2,75 +2,47 @@
 
 {% block content %}
 <style>
-
-    .custom-card0 {
-        background: linear-gradient(135deg, #61bd4f, #38bdae);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Make the content wrapper cover the full viewport height */
     }
 
-    .custom-card1 {
-        background: linear-gradient(135deg, #6e7bff, #38bdae);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .content {
+        text-align: center;
     }
 
-    .custom-card2 {
-        background: linear-gradient(135deg, #ff6f61, #ff8f8a);
-        color: white;
+    .btn-learn-more {
+        background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+        color: #fff;
         border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
     }
 
-    .card-title,
-    .card-text {
-        color: white;
+    .btn-learn-more:hover {
+        background-image: linear-gradient(to right, #8f94fb, #4e54c8);
     }
 </style>
 {% if user.is_authenticated %}
-    <h1 class="mt-4 mb-4">Welcome, {{ user.first_name}}!</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Home</li>
-    </ol>
-    <div class="card-wrapper" style="display: flex; justify-content: flex-start;">
-        <div class="card custom-card0" style="width: 37rem;">
-            <div class="card-body">
-                <h5 class="card-title">Logged in as:</h5>
-                <p class="card-text">Full Name: {{ user.get_full_name }}</p>
-                <p class="card-text">Email: {{ user.email }}</p>
-                <p class="card-text">Employee ID: {{ user.username }}</p>
-                <button type="button" class="btn btn-light" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
-            </div>
-        </div>
+
+<div class="content-wrapper">
+    <div class="content">
+        <h1 class="mt-4 mb-4">Welcome, {{ user.first_name }}!</h1>
+        <p class="lead">"Welcome back! Your login marks the start of swift and efficient IT support. Your requests will be addressed promptly to ensure seamless operations."</p>
+        <p class="lead">
+            <a href="createrequest" class="btn btn-lg btn-learn-more fw-bold">Get Started!</a>
+        </p>
     </div>
-    
-    <div class="card-wrapper" style="display: flex; justify-content: flex-start;">
-        <div class="card custom-card1" style="width: 18rem; margin-right: 20px; margin-top: 40px;">
-            <div class="card-body">
-                <h5 class="card-title">Create Request</h5>
-                <p class="card-text">Create your IT Requests here.</p> </br>
-                <button type="button" class="btn btn-light" onclick="window.location.href='{% url 'createrequest' %}'">Create</button>
-            </div>
-        </div>
-    
-        <div class="card custom-card2" style="width: 18rem; margin-right: 20px; margin-top: 40px;">
-            <div class="card-body">
-                <h5 class="card-title">View Request</h5>
-                <p class="card-text">Navigate to Dashboard. You can see all list of request here.</p>
-                <button type="button" class="btn btn-light" onclick="window.location.href='{% url 'viewrequest' %}'">View</button>
-            </div>
-        </div>
-    </div>
-    
+</div>
 
 {% else %}
-    <script>
-        window.location.href = "{% url 'login' %}";
-    </script>
+<script>
+    window.location.href = "{% url 'login' %}";
+</script>
 {% endif %}
 {% endblock %}
